@@ -1,0 +1,41 @@
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}">
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>music list</title>
+</head>
+<body>
+ <table border="1">
+    <tr>
+        <th>album </th>
+        <th>title </th>
+        <th>artist </th>
+        <th>tracknumber </th>
+        <th>genre </th>
+        <th>date </th>
+    </tr>
+    {% if music_list %}
+        {% for music in music_list %}
+            <tr>
+                <th>{{ music.album }}</th>
+                <th>{{ music.title }}</th>
+                <th>{{ music.artist }}</th>
+                <th>{{ music.tracknumber }}</th>
+                <th>{{ music.genre }}</th>
+                <th>{{ music.date }}</th>
+            </tr>
+            <tr>
+                <!-- <th><audio src="{{ MEDIA_URL }}music/osterreich/東京喰種_Original_Soundtrack_[Disc_2]/100009EA.mp3"></audio></th> -->
+                <th><audio src={{ music.path }}></audio></th>
+            </tr>    
+            
+        {% endfor %}
+    {% else %}
+        <p>No Music are available.</p>
+    {% endif %}
+  </table>
+</body>
+</html>
