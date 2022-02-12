@@ -11,6 +11,11 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+import os
+try:
+    from .local_settings import *
+except ImportError:
+    pass
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,12 +25,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-uvw^3f2euk=*a_1bzn&c!6t5_q4m&1gw=1_2i%7-x%e47w(00i'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -122,10 +126,16 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
-
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+# 静的ファイル配置先のディレクトリへのURL。http://ドメイン名:ポート名/static/フォルダ/ファイル名でアクセスできるようになる
+# ブラウザ上でアクセスするためのURLパス
 STATIC_URL = '/static/'
-MEDIA_URL = '/mnt/NAS/'
 
+# # 静的ファイルの配置先
+# STATICFILES_DIRS = [
+#     ("temp", BASE_DIR / "home/static/"),
+#     ("music_dir", '/mnt/NAS/music/'),
+# ]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
