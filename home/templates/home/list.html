@@ -1,0 +1,52 @@
+
+{% load home_extras %}
+<!-- settings.pyのstaticfileの設定を読み込む -->
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static '/home/style.css' %}">
+<script type={% static '/home/music_play.js' %}>
+<!DOCTYPE html>
+<html>
+<head>
+<title>music list</title>
+</head>
+<body>
+    
+ <table border="1">
+    <tr>
+        <th>album </th>
+        <th>title </th>
+        <th>artist </th>
+        <th>tracknumber </th>
+        <th>genre </th>
+        <th>date </th>
+    </tr>
+    {% if music_list %}
+        {% for music_data in music_list %}
+            <tr>
+                <th>{{ music_data.album }}</th>
+                <th>{{ music_data.title }}</th>
+                <th>{{ music_data.artist }}</th>
+                <th>{{ music_data.tracknumber }}</th>
+                <th>{{ music_data.genre }}</th>
+                <th>{{ music_data.date }}</th>
+            </tr>
+            <tr>
+                {% with '/'|addstr:music_data.artist|addstr:'/'|addstr:music_data.title|addstr:".mp3" as file_path %}
+                
+                <audio
+                    controls
+                    src= {% static "music_dir" %}{{file_path}}>
+                        Your browser does not support the
+                        <code>audio</code> element.
+                </audio>
+                {% endwith %}
+            </tr>
+            
+        {% endfor %}
+    {% else %}
+        <p>No Music are available.</p>
+    {% endif %}
+  </table>
+</body>
+</html>
