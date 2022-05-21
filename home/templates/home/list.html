@@ -2,51 +2,77 @@
 {% load home_extras %}
 <!-- settings.pyのstaticfileの設定を読み込む -->
 {% load static %}
-
+<style>
+footer{
+    position: absolute;/*←絶対位置*/
+    bottom: 0; /*下に固定*/
+}
+</style>
 <link rel="stylesheet" type="text/css" href="{% static '/home/style.css' %}">
-<script type={% static '/home/music_play.js' %}>
 <!DOCTYPE html>
 <html>
 <head>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
 <title>music list</title>
 </head>
 <body>
-    
+
  <table border="1">
     <tr>
+        <th>artist </th>
         <th>album </th>
         <th>title </th>
-        <th>artist </th>
-        <th>tracknumber </th>
-        <th>genre </th>
-        <th>date </th>
     </tr>
+
     {% if music_list %}
+        <select name="pets" id="pet-select">
+        <option value="">--Please choose an option--</option>
+        <option value="all">all</option>
         {% for music_data in music_list %}
+            <option value="{{ music_data.artist }}">{{ music_data.artist }}</option>
+            </select>
             <tr>
+                <!-- {% with '/'|addstr:music_data.artist|addstr:'/'|addstr:music_data.title|addstr:".mp3" as file_path %} -->
+                <th><li><a href="/home/ {{ file_path }} /">{{ music_data.artist }}</a></li></th>
+                <th><a>{{ music_data.artist }}</a></th>
                 <th>{{ music_data.album }}</th>
                 <th>{{ music_data.title }}</th>
-                <th>{{ music_data.artist }}</th>
-                <th>{{ music_data.tracknumber }}</th>
-                <th>{{ music_data.genre }}</th>
-                <th>{{ music_data.date }}</th>
+                {% endwith %}
             </tr>
             <tr>
-                {% with '/'|addstr:music_data.artist|addstr:'/'|addstr:music_data.title|addstr:".mp3" as file_path %}
                 
-                <audio
-                    controls
-                    src= {% static "music_dir" %}{{file_path}}>
-                        Your browser does not support the
-                        <code>audio</code> element.
-                </audio>
-                {% endwith %}
+                
+
             </tr>
             
         {% endfor %}
     {% else %}
         <p>No Music are available.</p>
     {% endif %}
+    <audio
+        controls
+        src= {% static "music_dir" %}{{file_path}}>
+            Your browser does not support the
+            <code>audio</code> element.
+    </audio>
   </table>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
 </body>
+
+<footer class="footer">
+  <div class="player" style="padding-left: 10px;padding-top:10px;background-color: #459dfb;">
+    <div class="right">
+      <div class="top">
+        <a class="song" style="margin-left: 15px;color: white;">artist</a><br>
+        <a class="song" style="margin-left: 15px;color: white;">name</a><br>
+        <a class="artist" style="margin-left: 15px;color:white">albam</a><br>
+      </div>
+      <div class="bottom">
+        <audio controls="" autoplay name="media"
+          style="margin-left: 100px;margin-bottom: 10px;width: 400px;height:30px">
+          <source src="{{last_played.song_file.url}}" type="audio/mpeg"></audio>
+      </div>
+    </div>
+  </div>
+</footer>
 </html>

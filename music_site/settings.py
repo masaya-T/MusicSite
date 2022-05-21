@@ -30,7 +30,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-
+ALLOWED_HOSTS = ["127.0.0.1", "192.168.11.3"] # 固定したローカルIPアドレスを追加
 
 # Application definition
 
