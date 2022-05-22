@@ -12,3 +12,8 @@ class musicData(models.Model):
 
     class Meta:
         db_table = 'music_info'        # テーブル名を指定
+
+class menueData(models.Model):
+    all_artist=[]
+    now_song=musicData()
+
