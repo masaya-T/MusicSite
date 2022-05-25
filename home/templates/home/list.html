@@ -33,18 +33,22 @@ footer{
         {% endfor %}
         </select>
         {% for music_data in music_list %}
-            <tr>
-                <th><li><a href="/home/ {{ file_path }} /">{{ music_data.artist }}</a></li></th>
-                <th><a>{{ music_data.artist }}</a></th>
-                <th>{{ music_data.album }}</th>
-                <th>{{ music_data.title }}</th>
-            </tr>
-            <tr>
-                
-                
-
-            </tr>
-            
+          <tr>
+              <th>{{ music_data.artist }}</th>
+              <th>{{ music_data.album }}</th>
+              <th>{{ music_data.title }}</th>
+          </tr>
+          <tr>
+                 {% with '/'|addstr:music_data.artist|addstr:'/'|addstr:music_data.title|addstr:".mp3" as file_path %}
+                 
+                 <audio
+                     controls
+                     src= {% static "music_dir" %}{{file_path}}>
+                         Your browser does not support the
+                         <code>audio</code> element.
+                 </audio>
+                 {% endwith %}
+             </tr>
         {% endfor %}
 
     {% else %}
@@ -63,10 +67,9 @@ footer{
         <a class="artist" style="margin-left: 15px;color:white">{{now_song.title}}</a><br>
       </div>
       <div class="bottom">
-        {% with 'music_dir/'|addstr:now_song.artist|addstr:'/'|addstr:now_song.title|addstr:".mp3" as file_path %}
-        <audio controls="" autoplay name="media"
-          style="margin-left: 100px;margin-bottom: 10px;width: 400px;height:30px">
-          <source src= "{% static file_path %}"  type="audio/mpeg"></audio>
+        {% with '/'|addstr:now_song.artist|addstr:'/'|addstr:now_song.title|addstr:".mp3" as file_path %}
+        <audio controls=""  src= {% static "music_dir" %}{{file_path}} autoplay name="media"
+          style="margin-left: 100px;margin-bottom: 10px;width: 400px;height:30px"></audio>
         {% endwith %}
       </div>
     </div>

@@ -20,7 +20,7 @@ class MusicListView(generic.ListView):
         for i in musicData.objects.db_manager("music").order_by('-id'):
             artists.append(i.artist)
         self.menue_data.all_artist=list(set(artists))
-        self.menue_data.now_song=musicData.objects.db_manager("music").order_by('-id')[0]
+        self.menue_data.now_song=musicData.objects.db_manager("music").order_by('-id')[1]
         return self.musics,self.menue_data
 
     def get_context_data(self, **kwargs):
